@@ -1,0 +1,21 @@
+{
+  "name": "condoai-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "CondoAI frontend React (Vite): UI para importar cartolas, guardar pagos y generar cartas PDF/DOCX o ZIP.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "vite": "^5.4.0"
+  }
+}

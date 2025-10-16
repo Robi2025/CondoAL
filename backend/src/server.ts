@@ -1,0 +1,22 @@
+import express from 'express';
+import cors from 'cors';
+import { importPayments } from './routes/payments.js';
+import { generateNoticePdf, generateNoticeDocx } from './routes/letters.js';
+import { generateBatchNoticesZip } from './routes/letters_batch.js';
+import { savePayments, listPayments } from './routes/storage.js';
+import { ensureSchema } from './services/db.js';
+const app = express();
+const PORT = process.env.PORT || 4000;
+const origins = (process.env.CORS_ORIGINS || '').split(',').map(s=>s.trim()).filter(Boolean);
+app.use(cors({ origin: origins.length ? origins : true }));
+app.use(express.json({ limit: '5mb' }));
+app.get('/api/health', (_, res) => res.json({ ok: true, service: 'CondoAI backend' }));
+app.post('/api/payments/import', importPayments);
+app.post('/api/payments/save', savePayments);
+app.get('/api/payments', listPayments);
+app.post('/api/letters/notice.pdf', generateNoticePdf);
+app.post('/api/letters/notice.docx', generateNoticeDocx);
+app.post('/api/letters/batch.zip', generateBatchNoticesZip);
+ensureSchema().then(()=>{
+  app.listen(PORT, () => console.log(`[CondoAI] Backend listening on http://localhost:${PORT}`));
+});
